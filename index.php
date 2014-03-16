@@ -1,3 +1,8 @@
+<?php
+require_once('classes/TimelineElement.class.php');
+require_once('classes/PhotoTimelineElement.class.php')
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

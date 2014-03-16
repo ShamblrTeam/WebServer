@@ -1,16 +1,27 @@
 <?php
 
-
 abstract class TimelineElement {
 	
-	// child classes should fil
-	protected $title, $numReblogs, $numLikes, $timestamp, $author;
+	// child classes should fill these variables
+	protected $title = '', $numReblogs = 0, $numLikes = 0, 
+		$timestamp = 0, $author = '', $icon_name = '', $tags = array();
 
-	protected $icon_name = '';
 
-	// override this will timeline-body content
+
+	// override this to render timeline-body content
 	abstract protected function renderContentBody();
 
+	// override this to get more granular data loading, but call via parent::
+	public function loadData(array &$data) {
+		$this->title = $data['title'];
+		$this->author = $data['author'];
+		$this->timestamp = $data['timestamp'];
+		$this->num_reblogs = $data['num_notes'];
+		$this->num_likes = $data['num_likes'];
+		$this->tags = $data['tags'];
+	}
+
+	// the main workhorse
 	public function renderHTML() {
 		$html = '';
 		$html .= $this->renderBadge();
@@ -66,6 +77,5 @@ abstract class TimelineElement {
           </small>
         </p>';
 	}
-
 
 }
