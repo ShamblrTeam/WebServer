@@ -1,7 +1,18 @@
 <?php
 require_once('classes/TimelineElement.class.php');
-require_once('classes/PhotoTimelineElement.class.php')
+require_once('classes/PhotoTimelineElement.class.php');
 
+$data = array(
+	'title' => 'mytitle',
+	'author' => 'auth.com',
+	'timestamp' => 1,
+	'tags' => array(
+		'this','is','a','tag',
+	),
+	'content' => 'https://24.media.tumblr.com/8c45c12892a3d6bd4eba64701cdf44fa/tumblr_n2i3owJCzg1tuoo5so2_1280.jpg'
+);
+
+$photo = new PhotoTimelineElement($data);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,6 +42,11 @@ require_once('classes/PhotoTimelineElement.class.php')
         <h1 id="timeline">Timeline</h1>
     </div> <!-- .page-header -->
     <ul class="timeline">
+
+    	<li>
+    		<?php echo $photo->renderHTML(); ?>
+    	</li>
+
 
         <li>
           <div class="timeline-badge"><i class="glyphicon glyphicon-picture"></i></div>
