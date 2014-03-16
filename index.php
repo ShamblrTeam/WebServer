@@ -1,9 +1,17 @@
 <?php
+
+// base class and factory. Needed before all other files.
 require_once('classes/TimelineElement.class.php');
-require_once('classes/PhotoTimelineElement.class.php');
+require_once('classes/TimelineElementFactory.class.php');
+
+// include all element subclasses
+foreach(glob('classes/*') as $filename) {
+	require_once($filename);
+}
 
 $data = array(
 	'title' => 'mytitle',
+	'type' => 'photo',
 	'author' => 'auth.com',
 	'timestamp' => 1,
 	'tags' => array(
@@ -12,7 +20,8 @@ $data = array(
 	'content' => 'https://24.media.tumblr.com/8c45c12892a3d6bd4eba64701cdf44fa/tumblr_n2i3owJCzg1tuoo5so2_1280.jpg'
 );
 
-$photo = new PhotoTimelineElement($data);
+$element = TimelineElementFactory::buildFromData($data);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,9 +53,8 @@ $photo = new PhotoTimelineElement($data);
     <ul class="timeline">
 
     	<li>
-    		<?php echo $photo->renderHTML(); ?>
+    		<?php echo $element->renderHTML(); ?>
     	</li>
-
 
         <li>
           <div class="timeline-badge"><i class="glyphicon glyphicon-picture"></i></div>

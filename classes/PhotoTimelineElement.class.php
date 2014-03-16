@@ -6,7 +6,7 @@ class PhotoTimelineElement extends TimelineElement {
 	private $caption = '';
 
 	// if we initialize with data, let's go ahead loadData
-	public function __construct(array &$data = null) {
+	public function __construct(array $data = null) {
 		$this->icon_name = 'picture';
 
 		if ($data) {
@@ -28,10 +28,12 @@ class PhotoTimelineElement extends TimelineElement {
 	}
 
 	// load general data through parent, and perform logic on `content`
-	public function loadData(array &$data) {
+	public function loadData(array $data) {
 		parent::loadData($data);
 		$this->image_urls = explode(',', $data['content']);
 		$this->caption = '';
 	}
 
 }
+
+TimelineElementFactory::registerClass('photo', PhotoTimelineElement);

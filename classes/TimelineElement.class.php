@@ -6,13 +6,11 @@ abstract class TimelineElement {
 	protected $title = '', $numReblogs = 0, $numLikes = 0, 
 		$timestamp = 0, $author = '', $icon_name = '', $tags = array();
 
-
-
 	// override this to render timeline-body content
 	abstract protected function renderContentBody();
 
 	// override this to get more granular data loading, but call via parent::
-	public function loadData(array &$data) {
+	public function loadData(array $data) {
 		$this->title = $data['title'];
 		$this->author = $data['author'];
 		$this->timestamp = $data['timestamp'];
