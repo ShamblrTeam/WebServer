@@ -20,7 +20,20 @@ $data = array(
 	'content' => 'https://24.media.tumblr.com/8c45c12892a3d6bd4eba64701cdf44fa/tumblr_n2i3owJCzg1tuoo5so2_1280.jpg'
 );
 
+$data2 = array(
+	'title' => 'My useless thoughts',
+	'type' => 'text',
+	'author' => 'tommycrush.tumblr.com',
+	'timestamp' => 1,
+	'tags' => array(
+		'this','is','a','tag',
+	),
+	'content' => 'These are some of my random thoughts. Blah Blah Blah Blah Blah Blah Blah Blahasdfasdfasdfasdfasdfasdf.',
+);
+
+
 $element = TimelineElementFactory::buildFromData($data);
+$element2 = TimelineElementFactory::buildFromData($data2);
 
 ?>
 <!DOCTYPE html>
@@ -54,6 +67,10 @@ $element = TimelineElementFactory::buildFromData($data);
 
     	<li>
     		<?php echo $element->renderHTML(); ?>
+    	</li>
+
+    	<li>
+    		<?php echo $element2->renderHTML(); ?>
     	</li>
 
         <li>
