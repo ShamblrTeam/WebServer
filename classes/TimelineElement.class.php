@@ -14,8 +14,8 @@ abstract class TimelineElement {
 		$this->title = $data['title'];
 		$this->author = $data['author'];
 		$this->timestamp = $data['timestamp'];
-		$this->num_reblogs = $data['num_notes'];
-		$this->num_likes = $data['num_likes'];
+		$this->num_reblogs = intval($data['num_notes']);
+		$this->num_likes = intval($data['num_likes']);
 		$this->tags = $data['tags'];
 	}
 
