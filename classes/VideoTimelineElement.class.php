@@ -1,15 +1,14 @@
 <?php
 
-class PhotoTimelineElement extends TimelineElement {
+class VideoTimelineElement extends TimelineElement {
 
     // individualzied content
-	private $image_urls = array();
+	private $embed_code = '';
 	private $caption = '';
 
 	public function __construct(array $data = null) {
-		$this->icon_name = 'picture';
-
-	    // if we initialize with data, let's go ahead loadData
+		$this->icon_name = 'film';
+	    // if we initialized with data, let's go ahead loadData
 		if ($data) {
 			$this->loadData($data);
 		}
@@ -17,11 +16,7 @@ class PhotoTimelineElement extends TimelineElement {
 
 	// generate content unique to this element
 	protected function renderContentBody() {
-		$html = '';
-		foreach ($this->image_urls as $image_url) {
-			$html .= '<img src="'.$image_url.'" style="width:100%;" alt="photo" />';
-		}
-
+		$html = 'Video embed code will go here';
 		if ($this->caption) {
 			$html .= '<p>'.htmlentities($this->caption).'</p>';
 		}
@@ -31,10 +26,10 @@ class PhotoTimelineElement extends TimelineElement {
 	// load general data through parent, and perform logic on `content`
 	public function loadData(array $data) {
 		parent::loadData($data);
-		$this->image_urls = explode(',', $data['content']);
-		$this->caption = '';
+		$this->embed_code = $data['content']; // @todo: Update with correct logic
+		$this->caption = $data['caption'];
 	}
 
 }
 
-TimelineElementFactory::registerClass('photo', PhotoTimelineElement);
+TimelineElementFactory::registerClass('video', PhotoTimelineElement);
