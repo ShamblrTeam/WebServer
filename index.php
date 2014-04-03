@@ -1,16 +1,5 @@
 <?php
-
-// throw away all the notices about missing indexes.
-//error_reporting(E_PARSE);
-
-// base class and factory. Needed before all other files.
-require_once('classes/TimelineElement.class.php');
-require_once('classes/TimelineElementFactory.class.php');
-
-// include all element subclasses
-foreach(glob('classes/*') as $filename) {
-	require_once($filename);
-}
+require_once('classes/init.php');
 
 // build query
 $query = new Query('unit_test');
