@@ -3,7 +3,7 @@
 class AudioTimelineElement extends TimelineElement {
 
     // individualzied content
-	private $audio_urls = array();
+	private $audio_url = '';
 	private $caption = '';
 
 
@@ -17,10 +17,9 @@ class AudioTimelineElement extends TimelineElement {
 
 	// generate content unique to this element
 	protected function renderContentBody() {
-		$html = '';
-		foreach ($this->image_urls as $image_url) {
-			$html .= '<audio src="'.$image_url.'">';
-		}
+		
+		$html = '<audio controls><source src="'.$this->audio_url.'" type="audio/mpeg"></audio>';
+
 		if ($this->caption) {
 			$html .= '<p>'.htmlentities($this->caption).'</p>';
 		}
@@ -30,7 +29,7 @@ class AudioTimelineElement extends TimelineElement {
 	// load general data through parent, and perform logic on `content`
 	public function loadData(array $data) {
 		parent::loadData($data);
-		$this->audio_urls = explode(',', $data['content']);
+		$this->audio_url = $data['content'];
 		$this->caption = '';
 	}
 }
