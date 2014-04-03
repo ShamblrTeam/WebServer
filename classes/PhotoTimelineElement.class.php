@@ -37,4 +37,4 @@ class PhotoTimelineElement extends TimelineElement {
 
 }
 
-TimelineElementFactory::registerClass('photo', PhotoTimelineElement);
+TimelineElementFactory::registerClass('photo', 'PhotoTimelineElement');

@@ -34,4 +34,4 @@ class AudioTimelineElement extends TimelineElement {
 	}
 }
 
-TimelineElementFactory::registerClass('audio', AudioTimelineElement);
+TimelineElementFactory::registerClass('audio', 'AudioTimelineElement');

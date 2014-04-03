@@ -9,9 +9,57 @@ class Query {
 		$this->query = $query;
 	}
 
+	public function testData() {
+		return array(
+			array(
+				'title' => 'mytitle',
+				'type' => 'photo',
+				'author' => 'auth.com',
+				'timestamp' => 1,
+				'tags' => array(
+					'this','is','a','tag',
+				),
+				'content' => 'https://24.media.tumblr.com/8c45c12892a3d6bd4eba64701cdf44fa/tumblr_n2i3owJCzg1tuoo5so2_1280.jpg'
+			),
+			array(
+				'title' => 'My useless thoughts',
+				'type' => 'text',
+				'author' => 'tommycrush.tumblr.com',
+				'timestamp' => 1,
+				'tags' => array(
+					'this','is','a','tag',
+				),
+				'content' => 'These are some of my random thoughts. Blah Blah Blah Blah Blah Blah Blah Blahasdfasdfasdfasdfasdfasdf.',
+			),
+			array(
+				'title' => 'Here is one of my favorite videos',
+				'type' => 'video',
+				'author' => 'tommycrush.tumblr.com',
+				'timestamp' => 1,
+				'tags' => array(
+					'this','is','a','tag',
+				),
+				'content' => 'http://www.youtube.com/watch?v=dTc--0sZbrE',
+			),		
+			array(
+				'title' => 'Here is my linkkkk',
+				'type' => 'link',
+				'author' => 'tommycrush.tumblr.com',
+				'timestamp' => 1,
+				'tags' => array(
+					'dogs',
+				),
+				'content' => 'http://goodcoyotes.tumblr.com/post/80119749672',
+			),				
+		);
+	}
+
 	public function execute() {
-		$message = json_encode(array('query'=> $this->query));
-		echo $this->sendMessageToSocket(self::$ip, self::$port, $message);
+		// if its a unit_test, return the fake data
+		if ($this->query == 'unit_test') {
+			return $this->testData();
+		}
+		//echo $this->sendMessageToSocket(self::$ip, self::$port, $message);
 	}
 
 	private function sendMessageToSocket($ip, $port, $message) {

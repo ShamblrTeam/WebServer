@@ -1,5 +1,8 @@
 <?php
 
+// throw away all the notices about missing indexes.
+//error_reporting(E_PARSE);
+
 // base class and factory. Needed before all other files.
 require_once('classes/TimelineElement.class.php');
 require_once('classes/TimelineElementFactory.class.php');
@@ -9,38 +12,22 @@ foreach(glob('classes/*') as $filename) {
 	require_once($filename);
 }
 
-$data = array(
-	'title' => 'mytitle',
-	'type' => 'photo',
-	'author' => 'auth.com',
-	'timestamp' => 1,
-	'tags' => array(
-		'this','is','a','tag',
-	),
-	'content' => 'https://24.media.tumblr.com/8c45c12892a3d6bd4eba64701cdf44fa/tumblr_n2i3owJCzg1tuoo5so2_1280.jpg'
-);
+// build query
+$query = new Query('unit_test');
+$element_datas = $query->execute();
 
-$data2 = array(
-	'title' => 'My useless thoughts',
-	'type' => 'text',
-	'author' => 'tommycrush.tumblr.com',
-	'timestamp' => 1,
-	'tags' => array(
-		'this','is','a','tag',
-	),
-	'content' => 'These are some of my random thoughts. Blah Blah Blah Blah Blah Blah Blah Blahasdfasdfasdfasdfasdfasdf.',
-);
-
-
-$element = TimelineElementFactory::buildFromData($data);
-$element2 = TimelineElementFactory::buildFromData($data2);
+// build the TimelineElement objects from the data
+$element_objects = array();
+foreach ($element_datas as $element_data) {
+  $element_objects[] = TimelineElementFactory::buildFromData($element_data);
+}
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Timeline (responsive) - Bootsnipp.com</title>
+    <title>Timeline</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/timeline.css" rel="stylesheet" />
@@ -65,20 +52,29 @@ $element2 = TimelineElementFactory::buildFromData($data2);
     </div> <!-- .page-header -->
     <ul class="timeline">
 
-    	<li>
-    		<?php echo $element->renderHTML(); ?>
-    	</li>
+      <?php
+        $index = 1;
+        foreach ($element_objects as $element_object) {
 
-    	<li>
-    		<?php echo $element2->renderHTML(); ?>
-    	</li>
+          // switch each side
+          if ($index % 2 == 0) {
+            echo '<li class="timeline-inverted">';
+          } else {
+            echo '<li>';
+          }
+          $index += 1;
+
+          echo $element_object->renderHTML();
+          echo '</li>';
+        }
+      ?>
 
         <li>
           <div class="timeline-badge"><i class="glyphicon glyphicon-picture"></i></div>
           <div class="timeline-panel">
             <div class="timeline-heading">
               <h4 class="timeline-title">This is the title of the post</h4>
- 			</div>
+ 		       	</div>
             <div class="timeline-body">
               <img src="https://24.media.tumblr.com/8c45c12892a3d6bd4eba64701cdf44fa/tumblr_n2i3owJCzg1tuoo5so2_1280.jpg" style="width:100%;" alt="photo"/>
               <p>Here is the captian of the post</p>
