@@ -3,7 +3,7 @@
 abstract class TimelineElement {
 	
 	// child classes should fill these variables
-	protected $title = '', $numReblogs = 0, $numLikes = 0, 
+	protected $title = '', $numNotes = 0, 
 		$timestamp = 0, $author = '', $icon_name = '', $tags = array();
 
 	// override this to render timeline-body content
@@ -13,15 +13,15 @@ abstract class TimelineElement {
 	public function loadData(array $data) {
 		$this->title = $data['title'];
 		$this->author = $data['author'];
+		$this->blog_link = $data['blog_link'];
 		$this->timestamp = $data['timestamp'];
-		$this->num_reblogs = intval($data['num_notes']);
-		$this->num_likes = intval($data['num_likes']);
+		$this->numNotes = intval($data['num_notes']);
 		$this->tags = $data['tags'];
 	}
 
 	// the main workhorse
 	public function renderHTML() {
-		$html = '';
+		$html = '<!-- new element -->';
 		$html .= $this->renderBadge();
 		$html .= '<div class="timeline-panel">';
 		$html .= $this->renderTitle();
@@ -51,27 +51,21 @@ abstract class TimelineElement {
 	}
 
 	private function renderNotes() {
-		$likes_noun = " likes";
-		if($this->likes == 1){
-			$likes_noun = " like";
+		$notes_noun = " notes";
+		if($this->numNotes == 1){
+			$likes_noun = " notes";
 		}
 
-		$reblogs_noun = " reblogs";
-		if($this->reblogs == 1){
-			$reblogs_noun = " reblog";
-		}
-
+		// $this->timestamp contains 'YYYY-MM-DD HH:MM:SS'
+		// format this into a readable date.
 		return '
 		<p class="notes">
           <small class="text-muted">
-           <i class="glyphicon glyphicon-thumbs-up"></i> '.$this->likes.$likes_noun.'
+           <i class="glyphicon glyphicon-thumbs-up"></i> '.$this->numNotes.' '.$likes_noun.'
           </small>
           <small class="text-muted">
-           <i class="glyphicon glyphicon-fullscreen"></i> '.$this->reblogs.$reblogs_noun.'
-          </small>
-          <small class="text-muted">
-           <i class="glyphicon glyphicon-time"></i> 11 hours ago 
-           by <a href="#">'.$this->author.'</a>
+           <i class="glyphicon glyphicon-time"></i> March 14th @ 7:00pm 
+           by <a href="'.$this->blog_link.'">'.$this->author.'</a>
           </small>
         </p>';
 	}

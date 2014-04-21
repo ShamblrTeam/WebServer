@@ -1,8 +1,8 @@
 <?php
 class Query {
 	
-	private static $ip = '127.0.0.1';
-	private static $port = 7777;
+	private static $ip = 'helix.vis.uky.edu';
+	private static $port = 7776;
 	private $query;
 
 	public function __construct($query) {
@@ -59,17 +59,40 @@ class Query {
 		if ($this->query == 'unit_test') {
 			return $this->testData();
 		}
-		//echo $this->sendMessageToSocket(self::$ip, self::$port, $message);
+
+		error_log("Looking for ".$this->query);
+
+		$message = json_encode(array("query" => $this->query));
+		error_log("Sending: ".$message);
+		$json = $this->sendMessageToSocket(self::$ip, self::$port, $message);
+
+		try {
+			// make it an array instead of an object.
+			$data = json_decode($json, true);
+			$posts = $data["posts"];
+			return $posts;
+		} catch (Exception $e) {
+			error_log("Error decoding message:");
+			error_log($e->getMessage());
+		}
 	}
 
 	private function sendMessageToSocket($ip, $port, $message) {
 		//Create TCP/IP sream socket and return the socket resource
 		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+		if ($socket === false) {
+		    error_log( "socket_create() failed: reason: " . socket_strerror(socket_last_error()) . "\n");
+		} else {
+		    error_log( "OK.\n" );
+		}
+
 		// Bind the source address
 		//socket_bind($socket, 'localhost');
 		$connected = socket_connect($socket, $ip, $port);
-		if($connected == false){
-			throw new Exception("couldnt connect");
+		if ($connected === false) {
+		    error_log( "socket_connect() failed.\nReason: ($result) " . socket_strerror(socket_last_error($socket)) . "\n");
+		} else {
+		    error_log( "OK.\n");
 		}
 
 		socket_send($socket, $message, strlen($message), MSG_EOF);

@@ -2,7 +2,7 @@
 require_once('classes/init.php');
 
 // build query
-$query = new Query('unit_test');
+$query = new Query('barack obama');
 $element_datas = $query->execute();
 
 // build the TimelineElement objects from the data
