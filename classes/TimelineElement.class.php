@@ -56,12 +56,14 @@ abstract class TimelineElement {
 			$likes_noun = " notes";
 		}
 
+		$notes = number_format($this->numNotes);
+
 		// $this->timestamp contains 'YYYY-MM-DD HH:MM:SS'
 		// format this into a readable date.
 		return '
 		<p class="notes">
           <small class="text-muted">
-           <i class="glyphicon glyphicon-thumbs-up"></i> '.$this->numNotes.' '.$likes_noun.'
+           <i class="glyphicon glyphicon-thumbs-up"></i> '.$notes.' '.$likes_noun.'
           </small>
           <small class="text-muted">
            <i class="glyphicon glyphicon-time"></i> March 14th @ 7:00pm 

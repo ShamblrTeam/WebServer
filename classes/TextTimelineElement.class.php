@@ -17,7 +17,7 @@ class TextTimelineElement extends TimelineElement {
 	// generate content unique to this element
 	protected function renderContentBody() {
         // nothing special in this element.
-        return '<p>'.htmlentities($this->text).'</p>';
+        return '<p>'.$this->text.'</p>';
 	}
 
 	// load general data through parent, and perform logic on `content`
