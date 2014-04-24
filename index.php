@@ -1,8 +1,15 @@
 <?php
 require_once('classes/init.php');
 
-// build query
-$query = new Query('barack obama');
+$query = $_GET['query'];
+
+if (empty($query)) {
+    header('Location: /search.php');
+    die();
+}
+
+// build query object
+$query = new Query($query);
 $element_datas = $query->execute();
 
 // build the TimelineElement objects from the data
