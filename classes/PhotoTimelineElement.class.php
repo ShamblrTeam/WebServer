@@ -19,7 +19,7 @@ class PhotoTimelineElement extends TimelineElement {
 	protected function renderContentBody() {
 		$html = '';
 		foreach ($this->image_urls as $image_url) {
-			$html .= '<img src="'.$image_url.'" style="width:100%;" alt="photo" />';
+			$html .= '<a target="_blank" href="'.$this->url().'"><img src="'.$image_url.'" style="width:100%;" alt="photo" /></a>';
 		}
 
 		if ($this->caption) {
