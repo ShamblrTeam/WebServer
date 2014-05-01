@@ -12,12 +12,13 @@ if (empty($query_str)) {
 $query = new Query($query_str);
 $element_datas = $query->execute();
 
+if (empty($element_datas)) {
+    die('No results found for "'.$query_str.'"');
+}
+
 // build the TimelineElement objects from the data
 $element_objects = array();
 foreach ($element_datas as $element_data) {
-  if ($element_data['type'] != 'photo') {
-    continue;
-  }
   $element_objects[] = TimelineElementFactory::buildFromData($element_data);
 }
 
